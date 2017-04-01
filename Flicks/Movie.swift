@@ -9,7 +9,8 @@
 import Foundation
 import AFNetworking
 
-private let movieDBUrl = "https://api.themoviedb.org/3/movie/now_playing?api_key=820d6e1a28229d4564b440ace769bbd9"
+private let movieDBUrl = "https://api.themoviedb.org/3/movie/"
+private let params = ["api_key": "820d6e1a28229d4564b440ace769bbd9"]
 private let posterPath = "https://image.tmdb.org/t/p/w500"
 
 class Movie{
@@ -25,9 +26,10 @@ class Movie{
         
     }
     
-    class func fecthMovieData(successCallback: @escaping ([Movie]) -> Void, error: ((Error?) -> Void)?){
+    class func fecthMovieData(endPoint: String, successCallback: @escaping ([Movie]) -> Void, error: ((Error?) -> Void)?){
+        let url = movieDBUrl+endPoint
         let networkManager = AFHTTPSessionManager()
-        networkManager.get(movieDBUrl, parameters: nil, progress: nil, success: {(operation, responseData) -> Void in
+        networkManager.get(url, parameters: params, progress: nil, success: {(operation, responseData) -> Void in
         
             let responseDataDic = responseData as? NSDictionary
             if let posts = responseDataDic?["results"] as? NSArray{

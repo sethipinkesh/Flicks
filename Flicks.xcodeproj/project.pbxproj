@@ -16,6 +16,7 @@
 		B3574D631E8E9DE800043089 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3574D621E8E9DE800043089 /* Movie.swift */; };
 		B3574D651E8EB77E00043089 /* MovieTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3574D641E8EB77E00043089 /* MovieTableCell.swift */; };
 		B3574D671E8F550D00043089 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3574D661E8F550D00043089 /* MovieDetailViewController.swift */; };
+		B3574D6C1E90148900043089 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3574D6B1E90148900043089 /* MovieCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B3574D621E8E9DE800043089 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		B3574D641E8EB77E00043089 /* MovieTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableCell.swift; sourceTree = "<group>"; };
 		B3574D661E8F550D00043089 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		B3574D6B1E90148900043089 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
 		CC04386FA1B45DE7C343C701 /* Pods-Flicks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flicks/Pods-Flicks.release.xcconfig"; sourceTree = "<group>"; };
 		D09FF97A3319DC4E47E11F18 /* Pods-Flicks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flicks/Pods-Flicks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				B3574D641E8EB77E00043089 /* MovieTableCell.swift */,
+				B3574D6B1E90148900043089 /* MovieCollectionCell.swift */,
 			);
 			name = VIews;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				B3574D651E8EB77E00043089 /* MovieTableCell.swift in Sources */,
 				B3574D511E8C09C600043089 /* AppDelegate.swift in Sources */,
 				B3574D631E8E9DE800043089 /* Movie.swift in Sources */,
+				B3574D6C1E90148900043089 /* MovieCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

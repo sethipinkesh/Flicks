@@ -147,6 +147,11 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate{
         }else{
             cell.moviePosterImageView.image =  nil
         }
+        // Use a red color when the user selects the cell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: (201/255.0), green: (239/255.0), blue: (247/255.0), alpha: 0.5)
+
+        cell.selectedBackgroundView = backgroundView
         
         return cell
     }
@@ -154,7 +159,10 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredMoviesList.count
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension MovieViewController: UICollectionViewDataSource, UICollectionViewDelegate{

@@ -20,7 +20,7 @@ class Movie{
     var moviePosterUrl: String?
     var movieOverView: String?
     var movieReleaseDate: String?
-    var movieVoteAverage: Float?
+    var movieVoteAverage: Float
     var moviePosterLowResolutionUrl: String?
     
     init(jsonMovieResponse: NSDictionary){
@@ -33,7 +33,7 @@ class Movie{
         }
         movieOverView = jsonMovieResponse["overview"] as? String
         movieReleaseDate = jsonMovieResponse["release_date"] as? String
-        movieVoteAverage = jsonMovieResponse["vote_average"] as? Float
+        movieVoteAverage = (jsonMovieResponse["vote_average"] as? Float)!
     }
     
     class func fecthMovieData(endPoint: String, successCallback: @escaping ([Movie]) -> Void, error: ((Error?) -> Void)?){

@@ -16,6 +16,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var detailScrollview: UIScrollView!
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var movieInfoView: UIView!
+    @IBOutlet weak var movieReleaseDateLabel: UILabel!
+    @IBOutlet weak var movieRatingLabel: UILabel!
     
     var movie : Movie!
     
@@ -23,6 +25,8 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         movieTitleLabel.text = movie.movieTitle
+        movieReleaseDateLabel.text = "Release date: " + movie.movieReleaseDate!
+        movieRatingLabel.text = "Rating: "+"\(movie.movieVoteAverage)"
         movieOverviewLabel.text = movie.movieOverView
         movieOverviewLabel.sizeToFit()
         if(movie.moviePosterUrl != nil){
@@ -31,7 +35,7 @@ class MovieDetailViewController: UIViewController {
             moviePosterImageView.image =  nil
         }
         // Do any additional setup after loading the view.
-        detailScrollview.contentSize = CGSize (width: detailScrollview.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height + 20)
+        detailScrollview.contentSize = CGSize (width: detailScrollview.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height + 40)
     }
 
     override func didReceiveMemoryWarning() {

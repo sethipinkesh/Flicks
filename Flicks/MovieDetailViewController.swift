@@ -15,7 +15,6 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieOverviewLabel: UILabel!
     @IBOutlet weak var detailScrollview: UIScrollView!
     @IBOutlet weak var movieTitleLabel: UILabel!
-    
     @IBOutlet weak var movieInfoView: UIView!
     
     var movie : Movie!
@@ -26,10 +25,14 @@ class MovieDetailViewController: UIViewController {
         movieTitleLabel.text = movie.movieTitle
         movieOverviewLabel.text = movie.movieOverView
         movieOverviewLabel.sizeToFit()
-        let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-        moviePosterImageView.setImageWith(fileUrl!)
+        if(movie.moviePosterUrl != nil){
+            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
+            moviePosterImageView.setImageWith(fileUrl!)
+        }else{
+            moviePosterImageView.image =  nil
+        }
         // Do any additional setup after loading the view.
-        detailScrollview.contentSize = CGSize (width: detailScrollview.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height)
+        detailScrollview.contentSize = CGSize (width: detailScrollview.frame.size.width, height: movieInfoView.frame.origin.y + movieInfoView.frame.size.height + 20)
     }
 
     override func didReceiveMemoryWarning() {

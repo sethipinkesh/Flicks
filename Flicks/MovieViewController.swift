@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MovieViewController.swift
 //  Flicks
 //
 //  Created by Sethi, Pinkesh on 3/29/17.
@@ -14,13 +14,12 @@ import MBProgressHUD
 class MovieViewController: UIViewController {
 
     @IBOutlet weak var movieTableView: UITableView!
-    
     @IBOutlet weak var errorMessageView: UIView!
-    
     @IBOutlet weak var movieCollectionView: UICollectionView!
     @IBOutlet weak var errorMessageLabel: UILabel!
-    // Initialize a UIRefreshControl
-    var refreshControl = UIRefreshControl()
+    
+    var refreshControlTable = UIRefreshControl()
+    var refreshControlCollection = UIRefreshControl()
     var moviesList = [Movie] ()
     var filteredMoviesList = [Movie] ()
     var endPoint: String!
@@ -56,10 +55,12 @@ class MovieViewController: UIViewController {
         
         // Initialize a UIRefreshControl
     
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        refreshControlTable.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        refreshControlCollection.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        
         // add refresh control to table view
-        movieTableView.insertSubview(refreshControl, at: 0)
-        movieCollectionView.insertSubview(refreshControl, at: 0)
+        movieTableView.insertSubview(refreshControlTable, at: 0)
+        movieCollectionView.insertSubview(refreshControlCollection, at: 0)
         
         self.fetchAndLoadMovieData()
         
@@ -79,24 +80,26 @@ class MovieViewController: UIViewController {
             // Hide HUD once the network request comes back (must be done on main UI thread)
             MBProgressHUD.hide(for: self.view, animated: true)
             
-            if self.refreshControl.isRefreshing{
-                self.refreshControl.endRefreshing()
+            if self.refreshControlTable.isRefreshing{
+                self.refreshControlTable.endRefreshing()
             }
+            if self.refreshControlCollection.isRefreshing{
+                self.refreshControlCollection.endRefreshing()
+            }
+            
         } , error:{(error) -> Void in
             // Hide HUD once the network request comes back (must be done on main UI thread)
             MBProgressHUD.hide(for: self.view, animated: true)
             self.errorMessageView.isHidden = false
             self.errorMessageLabel.text = "Netwrok error"
-            if self.refreshControl.isRefreshing{
-                self.refreshControl.endRefreshing()
+            if self.refreshControlTable.isRefreshing{
+                self.refreshControlTable.endRefreshing()
+            }
+            if self.refreshControlCollection.isRefreshing{
+                self.refreshControlCollection.endRefreshing()
             }
         })
         /*Movie.fetchMovies(successCallBack: self.movies, errorCallBack: error) */
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Navigation
@@ -117,14 +120,13 @@ class MovieViewController: UIViewController {
             let indexPath = movieCollectionView.indexPath(for: cell)
             row = (indexPath?.row)!
         }
-        let movie = filteredMoviesList[row]
-        let detailViewController = segue.destination as! MovieDetailViewController;
-        detailViewController.movie = movie
+        if(row != -1){
+            let movie = filteredMoviesList[row]
+            let detailViewController = segue.destination as! MovieDetailViewController;
+            detailViewController.movie = movie
+        }
     }
     
-    // Makes a network request to get updated data
-    // Updates the tableView with the new data
-    // Hides the RefreshControl
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         fetchAndLoadMovieData()
     }
@@ -139,8 +141,13 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate{
         let movie = filteredMoviesList[indexPath.row]
         cell.movieTitleLabel.text = movie.movieTitle
         cell.movieDescriptionLabel.text = movie.movieOverView
-        let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-        cell.moviePosterImageView.setImageWith(fileUrl!)
+        if(movie.moviePosterUrl != nil){
+            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
+            cell.moviePosterImageView.setImageWith(fileUrl!)
+        }else{
+            cell.moviePosterImageView.image =  nil
+        }
+        
         return cell
     }
     
@@ -156,9 +163,13 @@ extension MovieViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionCell", for: indexPath) as! MovieCollectionCell
         let movie = filteredMoviesList[indexPath.row]
         cell.movieTitleLabel.text =  movie.movieTitle
-        cell.movieTitleLabel.sizeToFit()
-        let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-        cell.moviePosterImage.setImageWith(fileUrl!)
+        //cell.movieTitleLabel.sizeToFit()
+        if(movie.moviePosterUrl != nil){
+            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
+            cell.moviePosterImage.setImageWith(fileUrl!)
+        }else{
+            cell.moviePosterImage.image =  nil
+        }
         return cell
     }
     

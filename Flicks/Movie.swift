@@ -21,9 +21,12 @@ class Movie{
     
     init(jsonMovieResponse: NSDictionary){
         movieTitle = jsonMovieResponse["title"] as? String
-        moviePosterUrl = posterPath+(jsonMovieResponse["poster_path"] as? String)!
+        if let posterEndPoint = jsonMovieResponse["poster_path"] as? String {
+            moviePosterUrl = posterPath+posterEndPoint
+        }else{
+            moviePosterUrl =  nil
+        }
         movieOverView = jsonMovieResponse["overview"] as? String
-        
     }
     
     class func fecthMovieData(endPoint: String, successCallback: @escaping ([Movie]) -> Void, error: ((Error?) -> Void)?){
@@ -37,15 +40,14 @@ class Movie{
                 for post in posts as! [NSDictionary]{
                     movies.append(Movie(jsonMovieResponse:post))
                 }
-                print(movies)
+                print("Fetched movie data successfully")
+                print(movies.count)
                 successCallback(movies)
-                
-            }        }, failure:{(operation, requestError) -> Void in
+                }
+            }, failure:{(operation, requestError) -> Void in
                 print(requestError)
                 error!(requestError)
-            
         })
-        
     }
     
    /* class func fetchMovies(successCallBack: @escaping ([Movie]) -> (), errorCallBack: ((Error?) -> ())?) {

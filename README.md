@@ -2,7 +2,7 @@
 
 **Flicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **12** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
@@ -19,22 +19,22 @@ The following **optional** features are implemented:
 - [x] Add a tab bar for **Now Playing** and **Top Rated** movies.
 - [x] Implement segmented control to switch between list view and grid view.
 - [x] Add a search bar.
-- [ ] All images fade in.
-- [ ] For the large poster, load the low-res image first, switch to high-res when complete.
+- [x] All images fade in.
+- [x] For the large poster, load the low-res image first, switch to high-res when complete.
 - [x] Customize the highlight and selection effect of the cell.
 - [x] Customize the navigation bar.
 
-The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
+Additional handling:
+- [x] Handling of Keyboard show/hide for different input cases in search bar. 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-
+![](gif/FlicksDemo.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 
 ## Notes
 
@@ -55,7 +55,7 @@ Credits:
   
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Pinkesh Sethi]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -45,7 +45,14 @@ Following are the challenges encountered during app development:
 - Adding Scroll view to a spcific view in DetailControllers
 - Custom navigation bar
 
+Credits: 
 
+- Frameworks used include
+    1. AFNetworking
+    2. MBProgressHUD
+- Icons provided by https://iconmonstr.com/
+- Movies from TheMovieDB
+  
 ## License
 
     Copyright [yyyy] [name of copyright owner]

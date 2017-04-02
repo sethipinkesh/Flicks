@@ -12,21 +12,28 @@ import AFNetworking
 private let movieDBUrl = "https://api.themoviedb.org/3/movie/"
 private let params = ["api_key": "820d6e1a28229d4564b440ace769bbd9"]
 private let posterPath = "https://image.tmdb.org/t/p/w500"
+private let lowResolutionPosterPath = "https://image.tmdb.org/t/p/w342"
 
 class Movie{
     
     var movieTitle: String?
     var moviePosterUrl: String?
     var movieOverView: String?
+    var movieReleaseDate: String?
+    var movieVoteAverage: Float?
+    var moviePosterLowResolutionUrl: String?
     
     init(jsonMovieResponse: NSDictionary){
         movieTitle = jsonMovieResponse["title"] as? String
         if let posterEndPoint = jsonMovieResponse["poster_path"] as? String {
             moviePosterUrl = posterPath+posterEndPoint
+            moviePosterLowResolutionUrl = lowResolutionPosterPath+posterEndPoint
         }else{
             moviePosterUrl =  nil
         }
         movieOverView = jsonMovieResponse["overview"] as? String
+        movieReleaseDate = jsonMovieResponse["release_date"] as? String
+        movieVoteAverage = jsonMovieResponse["vote_average"] as? Float
     }
     
     class func fecthMovieData(endPoint: String, successCallback: @escaping ([Movie]) -> Void, error: ((Error?) -> Void)?){

@@ -142,8 +142,7 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate{
         cell.movieTitleLabel.text = movie.movieTitle
         cell.movieDescriptionLabel.text = movie.movieOverView
         if(movie.moviePosterUrl != nil){
-            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-            cell.moviePosterImageView.setImageWith(fileUrl!)
+            fadeInImageFirst(imageView: cell.moviePosterImageView, movie: movie)
         }else{
             cell.moviePosterImageView.image =  nil
         }
@@ -173,8 +172,7 @@ extension MovieViewController: UICollectionViewDataSource, UICollectionViewDeleg
         cell.movieTitleLabel.text =  movie.movieTitle
         //cell.movieTitleLabel.sizeToFit()
         if(movie.moviePosterUrl != nil){
-            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-            cell.moviePosterImage.setImageWith(fileUrl!)
+            fadeInImageFirst(imageView: cell.moviePosterImage, movie: movie)
         }else{
             cell.moviePosterImage.image =  nil
         }
@@ -216,3 +214,34 @@ extension MovieViewController: UISearchBarDelegate{
     }
     
 }
+
+extension MovieViewController{
+    
+    func fadeInImageFirst(imageView: UIImageView, movie: Movie){
+        let imageRequest = URLRequest(url: Foundation.URL(string: movie.moviePosterUrl!)!)
+        imageView.setImageWith(
+            imageRequest,
+            placeholderImage: nil,
+            success: { (imageRequest, imageResponse, image) -> Void in
+                
+                // imageResponse will be nil if the image is cached
+                if imageResponse != nil {
+                    print("Image was NOT cached, fade in image")
+                    imageView.alpha = 0.0
+                    imageView.image = image
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                        imageView.alpha = 1.0
+                    })
+                } else {
+                    print("Image was cached so just update the image")
+                    imageView.image = image
+                }
+        },
+            failure: { (imageRequest, imageResponse, error) -> Void in
+                
+        })
+    }
+    
+}
+
+

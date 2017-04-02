@@ -26,8 +26,7 @@ class MovieDetailViewController: UIViewController {
         movieOverviewLabel.text = movie.movieOverView
         movieOverviewLabel.sizeToFit()
         if(movie.moviePosterUrl != nil){
-            let fileUrl = Foundation.URL(string: movie.moviePosterUrl!)
-            moviePosterImageView.setImageWith(fileUrl!)
+            loadLowResFirst(movie:movie)
         }else{
             moviePosterImageView.image =  nil
         }
@@ -41,6 +40,46 @@ class MovieDetailViewController: UIViewController {
     }
     
 
+    func loadLowResFirst(movie:Movie){
+    
+        let smallImageRequest = URLRequest(url: Foundation.URL(string: movie.moviePosterLowResolutionUrl!)!)
+        let largeImageRequest = URLRequest(url: Foundation.URL(string: movie.moviePosterUrl!)!)
+        
+        self.moviePosterImageView.setImageWith(
+            smallImageRequest as URLRequest,
+            placeholderImage: nil,
+            success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                
+                // smallImageResponse will be nil if the smallImage is already available
+                // in cache (might want to do something smarter in that case).
+                self.moviePosterImageView.alpha = 0.0
+                self.moviePosterImageView.image = smallImage;
+                
+                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                    
+                    self.moviePosterImageView.alpha = 1.0
+                    
+                }, completion: { (sucess) -> Void in
+                    
+                    // The AFNetworking ImageView Category only allows one request to be sent at a time
+                    // per ImageView. This code must be in the completion block.
+                    self.moviePosterImageView.setImageWith(
+                        largeImageRequest,
+                        placeholderImage: smallImage,
+                        success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                            
+                            self.moviePosterImageView.image = largeImage;
+                            
+                    },
+                        failure: { (request, response, error) -> Void in
+                            self.moviePosterImageView =  nil
+                    })
+                })
+        },
+            failure: { (request, response, error) -> Void in
+                self.moviePosterImageView = nil
+        })
+    }
     /*
     // MARK: - Navigation
 
